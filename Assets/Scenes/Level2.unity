@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -130,9 +131,9 @@ GameObject:
   - component: {fileID: 29043920}
   - component: {fileID: 29043919}
   - component: {fileID: 29043918}
+  - component: {fileID: 29043924}
   - component: {fileID: 29043923}
   - component: {fileID: 29043922}
-  - component: {fileID: 29043924}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1137,6 +1138,28 @@ MonoBehaviour:
   speed: 5
   joystickBackground: {fileID: 871653577}
   joystickHandle: {fileID: 871653580}
+--- !u!95 &1229933192
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684585588}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c55f2796d92795488940b2b6fc85bea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1298349636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1421,6 +1444,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 531e7ca4ee1531940a7e9b929ac865e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1229933191}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 531e7ca4ee1531940a7e9b929ac865e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1229933192}
   m_SourcePrefab: {fileID: 100100000, guid: 531e7ca4ee1531940a7e9b929ac865e1, type: 3}
 --- !u!1001 &1874990066
 PrefabInstance:
@@ -1651,7 +1677,6 @@ SceneRoots:
   - {fileID: 325147615}
   - {fileID: 2104096238}
   - {fileID: 29043921}
-  - {fileID: 1328509915}
   - {fileID: 943447443}
   - {fileID: 1977818506}
   - {fileID: 1298349636}
@@ -1662,3 +1687,4 @@ SceneRoots:
   - {fileID: 429771857}
   - {fileID: 951587895}
   - {fileID: 1178674790}
+  - {fileID: 1328509915}
