@@ -54,11 +54,7 @@ MonoBehaviour:
       - rid: 2460273962399826182
       - rid: 2460273962399826183
       - rid: 2460273962399826184
-<<<<<<< Updated upstream
       - rid: 1005252886466396234
-=======
-      - rid: 1005252864965345280
->>>>>>> Stashed changes
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 8
@@ -84,11 +80,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-<<<<<<< Updated upstream
     - rid: 1005252886466396234
-=======
-    - rid: 1005252864965345280
->>>>>>> Stashed changes
       type: {class: UniversalRenderPipelineEditorAssets, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_DefaultSettingsVolumeProfile: {fileID: 11400000, guid: eda47df5b85f4f249abf7abd73db2cb2, type: 2}
