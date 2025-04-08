@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 joystickInput; // Store the joystick input
     private Vector2 joystickCenter; // Center of the joystick background
     private float joystickRadius; // Radius of the joystick background
+  
 
     void Start()
     {
@@ -54,4 +55,6 @@ public class PlayerController : MonoBehaviour
         // Calculate the normalized input
         joystickInput = localPoint / joystickRadius;
     }
+  
+
 }

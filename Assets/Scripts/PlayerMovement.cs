@@ -3,8 +3,8 @@ using UnityEngine.InputSystem; // Import the new Input System
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float playerSpeed = 6f;
-    public float horizontalSpeed = 3f;
+    public float playerSpeed = 2f;
+    public float horizontalSpeed = 2f;
     public float rightLimit = 5.5f;
     public float leftLimit = -5.5f;
 
