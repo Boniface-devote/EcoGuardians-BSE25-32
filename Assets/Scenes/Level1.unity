@@ -5006,10 +5006,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d592f8f332a6187438c6d2838d24d1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.7
-  startPos: {x: 5, y: 0.3, z: -28}
-  endPos: {x: 5, y: 0.3, z: -23}
-  stopAtEnd: 0
+  speed: 1
+  startPos: {x: 5, y: 0.3, z: -23}
+  endPos: {x: 5, y: 0.3, z: -28}
+  idleDuration: 2
+  rotationSpeed: 180
 --- !u!1 &1072023914
 GameObject:
   m_ObjectHideFlags: 0
