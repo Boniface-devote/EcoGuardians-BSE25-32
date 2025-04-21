@@ -3,55 +3,76 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f; // Movement speed
-    public RectTransform joystickBackground; // Reference to the joystick background
-    public RectTransform joystickHandle; // Reference to the joystick handle
-    private Vector2 joystickInput; // Store the joystick input
-    private Vector2 joystickCenter; // Center of the joystick background
-    private float joystickRadius; // Radius of the joystick background
+    public float speed = 5f; // Normal movement speed
+    public float sprintMultiplier = 2f; // Multiplier for sprinting
+    public RectTransform joystickBackground;
+    public RectTransform joystickHandle;
+
+    private Vector2 joystickInput;
+    private Vector2 joystickCenter;
+    private float joystickRadius;
+    private bool isSprinting = false; // Sprint state
 
     void Start()
     {
-        // Calculate the center and radius of the joystick background
         joystickCenter = joystickBackground.position;
-        joystickRadius = joystickBackground.sizeDelta.x / 2f; // Assuming the background is a square
+        joystickRadius = joystickBackground.sizeDelta.x / 2f;
     }
 
     void Update()
     {
-        // If not dragging, reset input
+        // Handle sprinting with keyboard
+        isSprinting = Input.GetKey(KeyCode.LeftShift) || isSprinting;
+
+        // Reset joystick when not dragging
         if (!Input.GetMouseButton(0))
         {
             joystickInput = Vector2.zero;
-            joystickHandle.position = joystickCenter; // Reset handle position
+            joystickHandle.position = joystickCenter;
         }
 
-        // Move the player based on joystick input
-        Vector3 movement = new Vector3(joystickInput.x, 0f, joystickInput.y) * speed * Time.deltaTime;
+        float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
+
+        // Move player
+        Vector3 movement = new Vector3(joystickInput.x, 0f, joystickInput.y) * currentSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
 
-        // Rotate the player to face the movement direction
+        // Rotate player
         if (movement != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(movement);
         }
+
+        // Reset isSprinting if not holding shift or UI button
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            isSprinting = false;
+        }
     }
 
-    // Called when the joystick handle is dragged
     public void OnJoystickDrag(BaseEventData eventData)
     {
         PointerEventData pointerData = (PointerEventData)eventData;
 
-        // Calculate the joystick input based on the drag position
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             joystickBackground, pointerData.position, pointerData.pressEventCamera, out localPoint);
 
-        // Clamp the handle position within the background
         localPoint = Vector2.ClampMagnitude(localPoint, joystickRadius);
         joystickHandle.anchoredPosition = localPoint;
 
-        // Calculate the normalized input
         joystickInput = localPoint / joystickRadius;
+    }
+
+    // Called by the UI Sprint Button (OnPointerDown)
+    public void StartSprinting()
+    {
+        isSprinting = true;
+    }
+
+    // Called by the UI Sprint Button (OnPointerUp)
+    public void StopSprinting()
+    {
+        isSprinting = false;
     }
 }

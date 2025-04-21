@@ -1,0 +1,23 @@
+# ninja log v5
+16	4789	7666945147121029	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d3e80c76d842d154
+145	1054	7666945109765223	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	14a3cd2d72268ae
+1057	1663	7666945115932235	D:/Projects/EcoGuardians-BSE25-31/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/c6xa6n59/obj/arm64-v8a/libswappywrapper.so	8dcd89c6e6fe3264
+45	3652	7666945135836904	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	6615f671d51ba7a1
+4789	5042	7666945149870848	D:/Projects/EcoGuardians-BSE25-31/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/c6xa6n59/obj/arm64-v8a/libgame.so	37f3cb587cccf68f
+100	3907	7666945138436894	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	a43b58d86b889979
+31	3714	7666945136490207	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	5006688073c4cb63
+1	4073	7666945140045068	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	46e6624086094011
+118	3730	7666945136660069	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	f4a3d6cb734c934a
+61	3878	7666945138107168	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	6707aa7bfef7139
+77	4427	7666945143658023	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	3866bda87b5c382e
+104	612	7668874703646677	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	14a3cd2d72268ae
+613	1120	7668874709060737	D:/Projects/EcoGuardians-BSE25-31/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/c6xa6n59/obj/arm64-v8a/libswappywrapper.so	8dcd89c6e6fe3264
+79	2020	7668874717934606	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	6615f671d51ba7a1
+25	2029	7668874718110492	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	5006688073c4cb63
+36	2032	7668874718100389	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	6707aa7bfef7139
+56	2063	7668874718484552	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	f4a3d6cb734c934a
+90	2199	7668874719840227	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	a43b58d86b889979
+14	2318	7668874721097965	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	46e6624086094011
+68	2621	7668874724063591	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	3866bda87b5c382e
+46	2888	7668874726690813	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d3e80c76d842d154
+2888	3126	7668874729170263	D:/Projects/EcoGuardians-BSE25-31/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/c6xa6n59/obj/arm64-v8a/libgame.so	37f3cb587cccf68f
