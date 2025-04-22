@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +10,7 @@ public class RubbishTracker : MonoBehaviour
     public Text resultText;
     public Text totalRubbish;
     public Text correctlyDisposals;
+    public Button retryButton; // ✅ Add retry button
 
     private float timer;
     public int totalRubbishCount;
@@ -22,14 +23,18 @@ public class RubbishTracker : MonoBehaviour
     {
         timer = stageTimeLimit;
 
+        // Disable retry button initially
+        if (retryButton != null)
+            retryButton.gameObject.SetActive(false);
+
         // Find all rubbish objects in the scene
         foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
         {
             if (obj.CompareTag("Battery") || obj.CompareTag("FoodScrap") || obj.CompareTag("PlasticBottle") ||
-                obj.CompareTag("GlassBottle") || obj.CompareTag("SodaCan") || obj.CompareTag("Newspaper") || 
+                obj.CompareTag("GlassBottle") || obj.CompareTag("SodaCan") || obj.CompareTag("Newspaper") ||
                 obj.CompareTag("PackagingPaper") ||
                 obj.CompareTag("ScrapMetal") || obj.CompareTag("BeerBottle") ||
-                obj.CompareTag("BrokenGlass") || obj.CompareTag("PlasticBag") || 
+                obj.CompareTag("BrokenGlass") || obj.CompareTag("PlasticBag") ||
                 obj.CompareTag("FruitWaste") || obj.CompareTag("MedicalWaste") || obj.CompareTag("MetalContainer"))
             {
                 allRubbish.Add(obj);
@@ -38,7 +43,11 @@ public class RubbishTracker : MonoBehaviour
 
         totalRubbishCount = allRubbish.Count;
         Debug.Log("Total Rubbish Found: " + totalRubbishCount);
-        totalRubbish.text = "Total rubbish:" + totalRubbishCount.ToString();
+        totalRubbish.text = "Total rubbish: " + totalRubbishCount.ToString();
+
+        // Assign retry action if button exists
+        if (retryButton != null)
+            retryButton.onClick.AddListener(RetryStage);
     }
 
     void Update()
@@ -59,7 +68,7 @@ public class RubbishTracker : MonoBehaviour
     public void AddCorrectDisposal()
     {
         correctlyDisposedCount++;
-        correctlyDisposals.text="Correct Disposals: "+correctlyDisposedCount.ToString();
+        correctlyDisposals.text = "Correct Disposals: " + correctlyDisposedCount.ToString();
         float progress = (float)correctlyDisposedCount / totalRubbishCount;
         if (progress >= 0.8f && !stageEnded)
         {
@@ -80,10 +89,13 @@ public class RubbishTracker : MonoBehaviour
         else
         {
             if (resultText != null)
-                resultText.text = " Not enough rubbish disposed! Try again.";
+                resultText.text = "Not enough rubbish disposed! Try again.";
 
             Debug.LogWarning("Stage Failed! Less than 80% cleared.");
-            Invoke("RestartStage", 3f); // restart after short delay
+
+            // ✅ Show Retry Button
+            if (retryButton != null)
+                retryButton.gameObject.SetActive(true);
         }
     }
 
@@ -91,12 +103,12 @@ public class RubbishTracker : MonoBehaviour
     {
         stageEnded = true;
         if (resultText != null)
-            resultText.text = " Stage Complete! Good job!";
+            resultText.text = "Stage Complete! Good job!";
         Debug.Log("Stage completed successfully!");
-        // You can add level transition here
     }
 
-    void RestartStage()
+    // ✅ Called by retry button
+    public void RetryStage()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

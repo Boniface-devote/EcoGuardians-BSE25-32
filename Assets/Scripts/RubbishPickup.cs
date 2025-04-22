@@ -12,6 +12,7 @@ public class RubbishPickup : MonoBehaviour
     [Header("Glove Settings")]
     public bool glovesOn = false;
     public Text glovesStatusText;
+    public Text rubbishIndicator;
 
     private List<GameObject> carriedRubbish = new List<GameObject>();
     private string carriedCategory = null;
@@ -115,10 +116,12 @@ public class RubbishPickup : MonoBehaviour
                     rubbish.transform.SetParent(holdPoint);
 
                     Debug.Log($"Picked up: {rubbish.name} | Category: {category}");
+                    rubbishIndicator.text = $"Picked: {rubbish.name}| Category: {category}";
 
                     if ((category == "Hazardous Waste" || category == "Glass Waste") && !glovesOn)
                     {
                         Debug.LogWarning("Picked hazardous/sharp waste without gloves. Penalty applied.");
+                        rubbishIndicator.text = "Picked hazardous/sharp waste without gloves. Penalty applied.";
                         score -= 1;
                         UpdateScoreUI();
                     }
@@ -128,12 +131,14 @@ public class RubbishPickup : MonoBehaviour
                 else
                 {
                     Debug.Log("You can only carry rubbish of the same category.");
+                    rubbishIndicator.text = "You can only carry rubbish of the same category.";
                     return;
                 }
             }
         }
 
         Debug.Log("No valid rubbish nearby to pick up.");
+        rubbishIndicator.text = "No valid rubbish nearby to pick up.";
     }
 
     public void HandleDrop()
@@ -141,6 +146,7 @@ public class RubbishPickup : MonoBehaviour
         if (carriedRubbish.Count == 0)
         {
             Debug.Log("You are not carrying any rubbish.");
+            rubbishIndicator.text = "You are not carrying any rubbish.";
             return;
         }
 
@@ -168,6 +174,7 @@ public class RubbishPickup : MonoBehaviour
         }
 
         Debug.Log("Dropped all rubbish on the ground.");
+        rubbishIndicator.text = "Dropped all rubbish on the ground.";
         carriedRubbish.Clear();
         carriedCategory = null;
     }
@@ -189,6 +196,7 @@ public class RubbishPickup : MonoBehaviour
                     if (bin.IsFull())
                     {
                         Debug.LogWarning("Bin is full! Cannot drop more rubbish.");
+                        rubbishIndicator.text = "Bin is full! Cannot drop more rubbish.";
                         break;
                     }
 
@@ -200,6 +208,7 @@ public class RubbishPickup : MonoBehaviour
                         if (bin.TryAddRubbish())
                         {
                             Debug.Log($"Correct disposal: {rubbish.name} into {category} bin.");
+                            rubbishIndicator.text = $"Correct disposal: {rubbish.name} into {category} bin.";
                             score += 1;
                             FindObjectOfType<RubbishTracker>().AddCorrectDisposal();
 
@@ -210,6 +219,7 @@ public class RubbishPickup : MonoBehaviour
                         if (bin.TryAddRubbish())
                         {
                             Debug.LogWarning($"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.");
+                            rubbishIndicator.text = $"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.";
                             score -= 1;
                         }
                     }
@@ -225,6 +235,7 @@ public class RubbishPickup : MonoBehaviour
         }
 
         Debug.Log("No valid trash bin nearby.");
+        rubbishIndicator.text = "No valid trash bin nearby.";
     }
 
     bool IsNearTrashBin()
