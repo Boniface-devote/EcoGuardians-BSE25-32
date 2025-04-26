@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrashBin : MonoBehaviour
 {
@@ -8,10 +10,15 @@ public class TrashBin : MonoBehaviour
 
     private Renderer binRenderer;
 
+    [Header("UI Elements")]
+    public TextMeshProUGUI capacityText; // Set this in the Inspector
+    public Image fillBar;     // Optional: A fillable image (set fillMethod to Horizontal)
+
     void Start()
     {
         binRenderer = GetComponent<Renderer>();
         AssignColorByCategory();
+        UpdateUI();
     }
 
     // Assigns a unique color to the bin based on its category
@@ -54,7 +61,6 @@ public class TrashBin : MonoBehaviour
         return binCategory;
     }
 
-    // Call this when rubbish is correctly dropped in
     public bool TryAddRubbish()
     {
         if (currentCount >= maxCapacity)
@@ -64,6 +70,7 @@ public class TrashBin : MonoBehaviour
         }
 
         currentCount++;
+        UpdateUI();
         return true;
     }
 
@@ -71,4 +78,18 @@ public class TrashBin : MonoBehaviour
     {
         return currentCount >= maxCapacity;
     }
+
+    private void UpdateUI()
+    {
+        if (capacityText != null)
+        {
+            capacityText.text = $"{currentCount}/{maxCapacity}";
+        }
+
+        if (fillBar != null)
+        {
+            fillBar.fillAmount = (float)currentCount / maxCapacity;
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class RubbishTracker : MonoBehaviour
     public Text totalRubbish;
     public Text correctlyDisposals;
     public Button retryButton; // ✅ Add retry button
+    public GameObject ecoWarriorBadgeIcon;   // Badge for Level1
+    public GameObject ecoGuardianBadgeIcon;  // Badge for Level2
 
     private float timer;
     public int totalRubbishCount;
@@ -18,6 +21,8 @@ public class RubbishTracker : MonoBehaviour
 
     public List<GameObject> allRubbish = new List<GameObject>();
     private bool stageEnded = false;
+    
+
 
     void Start()
     {
@@ -65,16 +70,22 @@ public class RubbishTracker : MonoBehaviour
         }
     }
 
+    public static int CorrectlyDisposedTotal { get; private set; }
+
     public void AddCorrectDisposal()
     {
         correctlyDisposedCount++;
+        CorrectlyDisposedTotal = correctlyDisposedCount;
+
         correctlyDisposals.text = "Correct Disposals: " + correctlyDisposedCount.ToString();
+
         float progress = (float)correctlyDisposedCount / totalRubbishCount;
         if (progress >= 0.8f && !stageEnded)
         {
             StageCompleted();
         }
     }
+
 
     void EndStage()
     {
@@ -104,7 +115,26 @@ public class RubbishTracker : MonoBehaviour
         stageEnded = true;
         if (resultText != null)
             resultText.text = "Stage Complete! Good job!";
+        // Determine current scene and show corresponding badge
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "Level1" && ecoWarriorBadgeIcon != null)
+        {
+            ecoWarriorBadgeIcon.SetActive(true);
+        }
+        else if (currentScene == "Level2" && ecoGuardianBadgeIcon != null)
+        {
+            ecoGuardianBadgeIcon.SetActive(true);
+        }
         Debug.Log("Stage completed successfully!");
+        // ✅ Load next scene after delay
+       
+        StartCoroutine(LoadNextSceneAfterDelay());
+        
+    }
+    IEnumerator LoadNextSceneAfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("mainMenu");
     }
 
     // ✅ Called by retry button

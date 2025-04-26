@@ -1,0 +1,94 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PlayerEducator : MonoBehaviour
+{
+    public float interactionRange = 2f;
+    public KeyCode interactKey = KeyCode.E;
+    public Text interactionPrompt;
+    public Button interactButton; // UI button for interaction
+
+    private NPCWasteBehavior closestNPC;
+
+    void Start()
+    {
+        if (interactButton != null)
+        {
+            interactButton.onClick.AddListener(OnInteractButtonPressed);
+            interactButton.gameObject.SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        if (RubbishTracker.CorrectlyDisposedTotal < 3)
+        {
+            interactionPrompt.text = "Sort 3 items to gain trust!";
+            if (interactButton != null) interactButton.gameObject.SetActive(false);
+            return;
+        }
+
+        closestNPC = FindClosestNPC();
+        UpdateInteractionPrompt();
+
+        if (Input.GetKeyDown(interactKey) && closestNPC != null)
+        {
+            closestNPC.InteractWithPlayer();
+        }
+    }
+
+    void OnInteractButtonPressed()
+    {
+        if (closestNPC != null)
+        {
+            closestNPC.InteractWithPlayer();
+        }
+    }
+
+    void UpdateInteractionPrompt()
+    {
+        if (closestNPC == null || closestNPC.IsEducated())
+        {
+            interactionPrompt.text = "";
+            if (interactButton != null) interactButton.gameObject.SetActive(false);
+            return;
+        }
+
+        int resistanceLeft = closestNPC.GetCurrentResistance();
+
+        string playerMessage = resistanceLeft switch
+        {
+            3 => $"Hello! Do you know why sorting trash is important? ",
+            2 => $"Waste can be recycled if sorted. ",
+            1 => $"Yes! Sorting waste leads to a clean environment.",
+            0 => $"Thanks for listening! You got it now!",
+            _ => $"Press [{interactKey}] or tap the button to talk about waste management."
+        };
+
+        interactionPrompt.text = playerMessage;
+        if (interactButton != null) interactButton.gameObject.SetActive(true);
+    }
+
+    NPCWasteBehavior FindClosestNPC()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactionRange);
+        float minDist = Mathf.Infinity;
+        NPCWasteBehavior closest = null;
+
+        foreach (Collider hit in hits)
+        {
+            NPCWasteBehavior npc = hit.GetComponent<NPCWasteBehavior>();
+            if (npc != null && !npc.IsEducated())
+            {
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closest = npc;
+                }
+            }
+        }
+
+        return closest;
+    }
+}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class RubbishPickup : MonoBehaviour
@@ -17,57 +18,50 @@ public class RubbishPickup : MonoBehaviour
     private List<GameObject> carriedRubbish = new List<GameObject>();
     private string carriedCategory = null;
     private int score = 0;
+    public bool demoCompleted = false;
+    private Coroutine messageCoroutine;
 
     private Dictionary<string, string> rubbishCategories = new Dictionary<string, string>()
     {
         { "Battery", "Hazardous Waste" },
         { "MedicalWaste", "Hazardous Waste" },
-
         { "FoodScrap", "Organic Waste" },
         { "FoodWaste", "Organic Waste" },
         { "FruitWaste", "Organic Waste" },
-
         { "PlasticBottle", "Plastic Waste" },
         { "PlasticBag", "Plastic Waste" },
-
         { "Newspaper", "Paper Waste" },
         { "PackagingPaper", "Paper Waste" },
-
         { "GlassBottle", "Glass Waste" },
         { "BrokenGlass", "Glass Waste" },
         { "BeerBottle", "Glass Waste" },
-
         { "SodaCan", "Metal Waste" },
         { "MetalContainer", "Metal Waste" },
         { "ScrapMetal", "Metal Waste" },
-       
     };
 
     void Start()
     {
         UpdateGlovesText();
+        rubbishIndicator.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Press "A" to pick up
         if (Input.GetKeyDown(KeyCode.A))
         {
             TryPickupRubbish();
         }
 
-        // Press "X" to drop
         if (Input.GetKeyDown(KeyCode.X))
         {
             HandleDrop();
         }
 
-
-        // Follow hold point
         for (int i = 0; i < carriedRubbish.Count; i++)
         {
             if (carriedRubbish[i] != null)
-                carriedRubbish[i].transform.position = holdPoint.position + Vector3.up * (i * 0.3f); // stack them
+                carriedRubbish[i].transform.position = holdPoint.position + Vector3.up * (i * 0.3f);
         }
     }
 
@@ -89,7 +83,7 @@ public class RubbishPickup : MonoBehaviour
     {
         if (carriedRubbish.Count >= 3)
         {
-            Debug.Log("You can't carry more than 3 items.");
+            ShowMessage("You can't carry more than 3 items.", true);
             return;
         }
 
@@ -103,7 +97,6 @@ public class RubbishPickup : MonoBehaviour
             {
                 string category = rubbishCategories[tag];
 
-                // Ensure same category
                 if (carriedCategory == null || category == carriedCategory)
                 {
                     GameObject rubbish = hit.gameObject;
@@ -115,38 +108,33 @@ public class RubbishPickup : MonoBehaviour
 
                     rubbish.transform.SetParent(holdPoint);
 
-                    Debug.Log($"Picked up: {rubbish.name} | Category: {category}");
-                    rubbishIndicator.text = $"Picked: {rubbish.name}| Category: {category}";
+                    ShowMessage($"Picked: {rubbish.name}| Category: {category}", false);
 
                     if ((category == "Hazardous Waste" || category == "Glass Waste") && !glovesOn)
                     {
-                        Debug.LogWarning("Picked hazardous/sharp waste without gloves. Penalty applied.");
-                        rubbishIndicator.text = "Picked hazardous/sharp waste without gloves. Penalty applied.";
                         score -= 1;
                         UpdateScoreUI();
+                        ShowMessage("Picked hazardous/sharp waste without gloves. Penalty applied.", true);
                     }
 
                     return;
                 }
                 else
                 {
-                    Debug.Log("You can only carry rubbish of the same category.");
-                    rubbishIndicator.text = "You can only carry rubbish of the same category.";
+                    ShowMessage("You can only carry rubbish of the same category.", true);
                     return;
                 }
             }
         }
 
-        Debug.Log("No valid rubbish nearby to pick up.");
-        rubbishIndicator.text = "No valid rubbish nearby to pick up.";
+        ShowMessage("No valid rubbish nearby to pick up.", true);
     }
 
     public void HandleDrop()
     {
         if (carriedRubbish.Count == 0)
         {
-            Debug.Log("You are not carrying any rubbish.");
-            rubbishIndicator.text = "You are not carrying any rubbish.";
+            ShowMessage("You are not carrying any rubbish.", true);
             return;
         }
 
@@ -173,8 +161,7 @@ public class RubbishPickup : MonoBehaviour
             }
         }
 
-        Debug.Log("Dropped all rubbish on the ground.");
-        rubbishIndicator.text = "Dropped all rubbish on the ground.";
+        ShowMessage("Dropped all rubbish on the ground.", false);
         carriedRubbish.Clear();
         carriedCategory = null;
     }
@@ -195,8 +182,7 @@ public class RubbishPickup : MonoBehaviour
                 {
                     if (bin.IsFull())
                     {
-                        Debug.LogWarning("Bin is full! Cannot drop more rubbish.");
-                        rubbishIndicator.text = "Bin is full! Cannot drop more rubbish.";
+                        ShowMessage("Bin is full! Cannot drop more rubbish.", true);
                         break;
                     }
 
@@ -207,20 +193,18 @@ public class RubbishPickup : MonoBehaviour
                     {
                         if (bin.TryAddRubbish())
                         {
-                            Debug.Log($"Correct disposal: {rubbish.name} into {category} bin.");
-                            rubbishIndicator.text = $"Correct disposal: {rubbish.name} into {category} bin.";
                             score += 1;
+                            demoCompleted = true;
                             FindObjectOfType<RubbishTracker>().AddCorrectDisposal();
-
+                            ShowMessage($"Correct disposal: {rubbish.name} into {category} bin.", false);
                         }
                     }
                     else
                     {
                         if (bin.TryAddRubbish())
                         {
-                            Debug.LogWarning($"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.");
-                            rubbishIndicator.text = $"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.";
                             score -= 1;
+                            ShowMessage($"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.", true);
                         }
                     }
 
@@ -234,8 +218,7 @@ public class RubbishPickup : MonoBehaviour
             }
         }
 
-        Debug.Log("No valid trash bin nearby.");
-        rubbishIndicator.text = "No valid trash bin nearby.";
+        ShowMessage("No valid trash bin nearby.", true);
     }
 
     bool IsNearTrashBin()
@@ -253,6 +236,24 @@ public class RubbishPickup : MonoBehaviour
     {
         if (scoreText != null)
             scoreText.text = "Score: " + score;
+    }
+
+    void ShowMessage(string message, bool isWarning)
+    {
+        if (messageCoroutine != null)
+            StopCoroutine(messageCoroutine);
+        messageCoroutine = StartCoroutine(DisplayMessage(message, isWarning));
+    }
+
+    IEnumerator DisplayMessage(string message, bool isWarning)
+    {
+        rubbishIndicator.text = message;
+        rubbishIndicator.color = isWarning ? Color.red : Color.green;
+        rubbishIndicator.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        rubbishIndicator.gameObject.SetActive(false);
     }
 
     void OnDrawGizmosSelected()
