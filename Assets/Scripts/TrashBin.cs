@@ -6,12 +6,13 @@ public class TrashBin : MonoBehaviour
 {
     public string binCategory; // e.g. "Hazardous Waste", "Organic Waste"
     public int maxCapacity = 2; // Maximum number of items this bin can hold
-    private int currentCount = 0;
+    public int currentCount = 0;
 
     private Renderer binRenderer;
 
     [Header("UI Elements")]
     public TextMeshProUGUI capacityText; // Set this in the Inspector
+    public Text RubbishFullOrNot; // Set this in the Inspector
     public Image fillBar;     // Optional: A fillable image (set fillMethod to Horizontal)
 
     void Start()
@@ -66,6 +67,7 @@ public class TrashBin : MonoBehaviour
         if (currentCount >= maxCapacity)
         {
             Debug.LogWarning($"Bin for {binCategory} is full!");
+            RubbishFullOrNot.text = $"Bin for {binCategory} is full!";
             return false;
         }
 
@@ -90,6 +92,12 @@ public class TrashBin : MonoBehaviour
         {
             fillBar.fillAmount = (float)currentCount / maxCapacity;
         }
+    }
+    public void Empty()
+    {
+        currentCount = 0;
+        RubbishFullOrNot.text = $"Bin for {binCategory} emptied.";
+        UpdateUI();
     }
 
 }

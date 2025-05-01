@@ -1,0 +1,150 @@
+using UnityEngine;
+
+public class OverheadCameraSwitcher : MonoBehaviour
+{
+    public Camera mainCamera;
+    public Camera overheadCamera;
+    public Camera carCamera;
+    public Transform player;
+    public Transform car;
+    public Vector3 overheadOffset = new Vector3(0f, 20f, 0f);
+
+    public float interactionDistance = 3f;
+    public float exitDistanceFromCar = 4f; // Distance to place player when exiting
+    private bool isOverheadActive = false;
+    private bool isInCar = false;
+    private BoxCollider playerCollider;
+
+    void Start()
+    {
+        // Activate main camera initially
+        if (mainCamera != null && overheadCamera != null && carCamera != null)
+        {
+            mainCamera.gameObject.SetActive(true);
+            overheadCamera.gameObject.SetActive(false);
+            carCamera.gameObject.SetActive(false);
+        }
+
+        if (player != null)
+        {
+            playerCollider = player.GetComponent<BoxCollider>();
+            if (playerCollider == null)
+            {
+                Debug.LogWarning("Player does not have a BoxCollider component!");
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (player == null || car == null)
+            return;
+
+        if (!isInCar)
+        {
+            float distanceToCar = Vector3.Distance(player.position, car.position);
+
+            if (distanceToCar <= interactionDistance && Input.GetKeyDown(KeyCode.E))
+            {
+                EnterCar();
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ExitCar();
+            }
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (isOverheadActive && overheadCamera != null && player != null && !isInCar)
+        {
+            overheadCamera.transform.position = player.position + overheadOffset;
+            overheadCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        }
+    }
+
+    public void ToggleCameraView()
+    {
+        if (isInCar) return; // Don't allow overhead view while inside the car
+
+        isOverheadActive = !isOverheadActive;
+
+        if (mainCamera != null && overheadCamera != null)
+        {
+            mainCamera.gameObject.SetActive(!isOverheadActive);
+            overheadCamera.gameObject.SetActive(isOverheadActive);
+        }
+    }
+
+    void EnterCar()
+    {
+        isInCar = true;
+
+        mainCamera.gameObject.SetActive(false);
+        overheadCamera.gameObject.SetActive(false);
+
+        if (carCamera != null)
+        {
+            carCamera.gameObject.SetActive(true);
+        }
+
+        player.SetParent(car);
+    }
+
+    void ExitCar()
+    {
+        isInCar = false;
+
+        if (carCamera != null)
+        {
+            carCamera.gameObject.SetActive(false);
+        }
+
+        if (mainCamera != null)
+        {
+            mainCamera.gameObject.SetActive(true);
+        }
+
+        player.SetParent(null);
+
+        // Calculate correct respawn position
+        Vector3 exitDirection = car.right; // Exit to the right of the car
+        Vector3 offset = exitDirection * (exitDistanceFromCar + GetPlayerHalfWidth());
+        Vector3 newPosition = car.position + offset;
+
+        // Force Y to be exactly 1
+        newPosition.y = 1f;
+
+        player.position = newPosition;
+    }
+
+    float GetPlayerHalfWidth()
+    {
+        if (playerCollider != null)
+        {
+            return playerCollider.size.x * 0.5f * player.localScale.x;
+        }
+        return 0f;
+    }
+
+    // 🆕 Public method to be linked to the UI Button to Enter/Exit car
+    public void OnEnterExitButtonPressed()
+    {
+        if (!isInCar)
+        {
+            float distanceToCar = Vector3.Distance(player.position, car.position);
+            if (distanceToCar <= interactionDistance)
+            {
+                EnterCar();
+            }
+        }
+        else
+        {
+            ExitCar();
+        }
+    }
+}

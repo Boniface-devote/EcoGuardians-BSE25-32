@@ -1118,8 +1118,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
   overheadCamera: {fileID: 247142638}
+  carCamera: {fileID: 0}
   player: {fileID: 97632383}
+  car: {fileID: 0}
   overheadOffset: {x: 0, y: 12, z: 0}
+  interactionDistance: 3
 --- !u!114 &97632389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,7 +3162,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -14543,7 +14546,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
