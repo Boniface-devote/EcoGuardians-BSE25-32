@@ -24,8 +24,8 @@ namespace GleyTrafficSystem
         public Button emptyButton; // ✅ UI button to assign in Inspector
 
         bool mainLights;
-        bool brake;
-        bool reverse;
+        //bool brake;
+        //bool reverse;
         bool blinkLeft;
         bool blinkRifgt;
         float realtimeSinceStartup;
@@ -59,19 +59,19 @@ namespace GleyTrafficSystem
             float steering = maxSteeringAngle * inputScript.GetHorizontalInput();
 
             float localVelocity = transform.InverseTransformDirection(rb.linearVelocity).z + 0.1f;
-            reverse = false;
-            brake = false;
+            //reverse = false;
+            //brake = false;
 
             if (localVelocity < 0)
-                reverse = true;
+                //reverse = true;
 
             if (motor < 0)
             {
-                if (localVelocity > 0) brake = true;
+                //if (localVelocity > 0) brake = true;
             }
             else
             {
-                if (motor > 0 && localVelocity < 0) brake = true;
+                //if (motor > 0 && localVelocity < 0) brake = true;
             }
 
             foreach (AxleInfo axleInfo in axleInfos)

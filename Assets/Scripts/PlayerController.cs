@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     public void StartSprinting()
     {
         isSprinting = true;
+        Debug.Log("sprinting");
     }
 
     // Called by the UI Sprint Button (OnPointerUp)
