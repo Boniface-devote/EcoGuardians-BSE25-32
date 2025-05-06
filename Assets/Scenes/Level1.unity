@@ -4021,7 +4021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464497e2765cb6244a1f58dc6337121f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageTimeLimit: 15
+  stageTimeLimit: 600
   timerText: {fileID: 1109917913}
   resultText: {fileID: 99916782}
   totalRubbish: {fileID: 1579877276}
