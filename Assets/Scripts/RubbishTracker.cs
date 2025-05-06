@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class RubbishTracker : MonoBehaviour
 {
-    public float stageTimeLimit = 300f; // 5 minutes in seconds
+    public float stageTimeLimit = 10f; // 5 minutes in seconds
     public Text timerText;
     public Text resultText;
     public Text totalRubbish;
+    public Text totalRubbishForStageResults;
     public Text correctlyDisposals;
-    public Button retryButton; // ✅ Add retry button
+
+    public GameObject retryPanel; // ✅ Retry Panel instead of Button
+    public GameObject ControllerPanel; // ✅ Retry Panel instead of Button
     public GameObject ecoWarriorBadgeIcon;   // Badge for Level1
     public GameObject ecoGuardianBadgeIcon;  // Badge for Level2
 
@@ -21,16 +24,14 @@ public class RubbishTracker : MonoBehaviour
 
     public List<GameObject> allRubbish = new List<GameObject>();
     private bool stageEnded = false;
-    
-
 
     void Start()
     {
         timer = stageTimeLimit;
 
-        // Disable retry button initially
-        if (retryButton != null)
-            retryButton.gameObject.SetActive(false);
+        // Disable retry panel initially
+        if (retryPanel != null)
+            retryPanel.SetActive(false);
 
         // Find all rubbish objects in the scene
         foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
@@ -49,10 +50,15 @@ public class RubbishTracker : MonoBehaviour
         totalRubbishCount = allRubbish.Count;
         Debug.Log("Total Rubbish Found: " + totalRubbishCount);
         totalRubbish.text = "Total rubbish: " + totalRubbishCount.ToString();
+        totalRubbishForStageResults.text = "Total rubbish: " + totalRubbishCount.ToString();
 
-        // Assign retry action if button exists
-        if (retryButton != null)
-            retryButton.onClick.AddListener(RetryStage);
+        // Assign retry action from panel's retry button
+        if (retryPanel != null)
+        {
+            Button retryButton = retryPanel.GetComponentInChildren<Button>();
+            if (retryButton != null)
+                retryButton.onClick.AddListener(RetryStage);
+        }
     }
 
     void Update()
@@ -86,7 +92,6 @@ public class RubbishTracker : MonoBehaviour
         }
     }
 
-
     void EndStage()
     {
         stageEnded = true;
@@ -104,9 +109,10 @@ public class RubbishTracker : MonoBehaviour
 
             Debug.LogWarning("Stage Failed! Less than 80% cleared.");
 
-            // ✅ Show Retry Button
-            if (retryButton != null)
-                retryButton.gameObject.SetActive(true);
+            // ✅ Show Retry Panel
+            if (retryPanel != null)
+                retryPanel.SetActive(true);
+                ControllerPanel.SetActive(false);
         }
     }
 
@@ -115,7 +121,8 @@ public class RubbishTracker : MonoBehaviour
         stageEnded = true;
         if (resultText != null)
             resultText.text = "Stage Complete! Good job!";
-        // Determine current scene and show corresponding badge
+
+        // Show badge based on scene
         string currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "Level1" && ecoWarriorBadgeIcon != null)
         {
@@ -125,19 +132,19 @@ public class RubbishTracker : MonoBehaviour
         {
             ecoGuardianBadgeIcon.SetActive(true);
         }
+
         Debug.Log("Stage completed successfully!");
-        // ✅ Load next scene after delay
-       
+
         StartCoroutine(LoadNextSceneAfterDelay());
-        
     }
+
     IEnumerator LoadNextSceneAfterDelay()
     {
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("mainMenu");
     }
 
-    // ✅ Called by retry button
+    // ✅ Called by retry panel button
     public void RetryStage()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

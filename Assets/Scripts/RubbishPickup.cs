@@ -196,6 +196,8 @@ public class RubbishPickup : MonoBehaviour
                             score += 1;
                             demoCompleted = true;
                             FindObjectOfType<RubbishTracker>().AddCorrectDisposal();
+                            FindObjectOfType<CategoryRubbishTracker>()?.RegisterRubbish(category, true);
+
                             ShowMessage($"Correct disposal: {rubbish.name} into {category} bin.", false);
                         }
                     }
@@ -204,6 +206,8 @@ public class RubbishPickup : MonoBehaviour
                         if (bin.TryAddRubbish())
                         {
                             score -= 1;
+                            FindObjectOfType<CategoryRubbishTracker>()?.RegisterRubbish(category, false);
+
                             ShowMessage($"Incorrect disposal: {rubbish.name} is {category}, bin is {bin.GetCategory()}.", true);
                         }
                     }

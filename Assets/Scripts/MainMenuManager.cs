@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject mainPanel;
     public GameObject aboutPanel;
     public GameObject levelPanel;
+    public GameObject Registration;
 
     // Load scene by name
     public void LoadLevel1(string sceneName)
@@ -92,6 +93,7 @@ public class MainMenuManager : MonoBehaviour
         {
             aboutPanel.SetActive(false);
             levelPanel.SetActive(false);
+            Registration.SetActive(false);
         }
         else
         {
