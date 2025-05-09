@@ -1,7 +1,7 @@
-Eco-Guardians: Waste Warriors of Uganda
+**Eco-Guardians: Waste Warriors of Uganda**
 
 Eco-Guardians: Waste Warriors of Uganda is an offline educational mobile game developed by BSE 25-31, a team of Bachelor of Science in Software Engineering students at Makerere University’s School of Computing and Informatics Technology. Built with Unity 6 and C#, the game immerses players in a 3D Ugandan market to learn waste management through sorting and community education. Targeting Android 9.0+ and Windows 10+ platforms, it promotes environmental awareness among schoolchildren and communities in Uganda.
-Table of Contents
+**Table of Contents**
 
 Overview
 System Requirements
@@ -11,32 +11,32 @@ Contributing
 Support
 Acknowledgements
 
-Overview
+**Overview**
 Eco-Guardians educates players on proper waste management through two engaging levels:
 
 Level 1: Sort waste into six categories (Plastics, Organic, Paper, Metal, Glass, Hazardous) using intuitive controls.
 Level 2: Educate non-playable characters (NPCs) and collect waste via a truck to clean the market.
 
 The game operates offline, storing progress locally in savegame.json and PlayerPrefs, and is optimized for low-end devices to ensure accessibility. It supports touch (Android) and mouse/keyboard (Windows) inputs, with a heads-up display (HUD) showing real-time metrics like Score and Correct Disposals.
-System Requirements
+**System Requirements**
 
 
 
-Platform
-Minimum Requirements
+**Platform
+Minimum Requirements**
 
 
 
-Android
+**Android**
 - OS: Android 9.0 (Pie) or later- RAM: 1 GB (3 GB recommended)- Storage: 100 MB free- GPU: OpenGL ES 3.0 or Vulkan- Touchscreen
 
 
-Windows
+**Windows**
 - OS: Windows 10 or later- RAM: 4 GB- Storage: 100 MB free- GPU: DirectX 12 compatible- Mouse/keyboard or touchscreen
 
 
-Installation
-Android
+**Installation**
+**Android**
 
 Download EcoGuardians.apk from Releases.
 Enable "Install from Unknown Sources" in Settings > Security.
@@ -44,14 +44,14 @@ Open the APK in your file manager and tap to install.
 Grant storage permissions for saving game progress.
 Launch Eco-Guardians from your home screen.
 
-Windows
+**Windows**
 
 Download EcoGuardians_Setup.exe from Releases.
 Run the EXE and follow the installer prompts to install to C:\Program Files\EcoGuardians or a custom directory.
 Launch the game via the desktop shortcut or Start menu.
 
-Usage
-Getting Started
+**Usage**
+**Getting Started**
 
 Launch Eco-Guardians and enter a username (e.g., “EcoPlayer123”).
 From the main menu, select:
@@ -62,9 +62,9 @@ Exit: Close the game.
 
 
 
-Gameplay
+**Gameplay**
 
-Level 1: Waste Sorting Tutorial
+**Level 1: Waste Sorting Tutorial**
 
 Use the joystick (touch: left screen; Windows: WASD) to move.
 Tap/click Pick to collect up to 3 same-category waste items.
@@ -73,20 +73,19 @@ Use Glove for hazardous waste and Aerial View for an overhead perspective.
 HUD shows Score, Total Rubbish, and Correct Disposals.
 
 
-Level 2: NPC Education and Truck Collection
+**Level 2: NPC Education and Truck Collection**
 
 Educate NPCs with the Educate button after 3 correct disposals.
 Use Truck mode (arrows or touch controls) to collect waste from bins.
 Achieve 80% waste sorting within 5 minutes to win.
 
 
-Progress Tracking: View achievements (e.g., “Waste Sorter” badge) in the main menu or end-of-level menu.
+**Progress Tracking:** View achievements (e.g., “Waste Sorter” badge) in the main menu or end-of-level menu.
 
-Reset Progress: Select “Reset Game” to clear saves (requires confirmation).
 
 
 For detailed instructions, see the User Manual.
-Contributing
+**Contributing**
 We welcome contributions to enhance Eco-Guardians! To contribute:
 
 Fork the repository: https://github.com/BSE25-31/EcoGuardians.
@@ -107,7 +106,7 @@ Save Corruption: Game restarts with a “Save file corrupted” message.
 
 
 
-Acknowledgements
+**Acknowledgements**
 
 Supervisor: Dr. Rashidah K. Namisanvu, Makerere University
 Team: BSE 25-31, Department of Networks
