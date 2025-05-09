@@ -89,7 +89,7 @@ For detailed instructions, see the User Manual.
 We welcome contributions to enhance Eco-Guardians! To contribute:
 
 Fork the repository: https://github.com/BSE25-31/EcoGuardians.
-Clone your fork: git clone https://github.com/your-username/EcoGuardians.git.
+Clone your fork: git clone https://github.com/Ngongkon/EcoGuardians-BSE25-31.git.
 Create a branch: git checkout -b feature/your-feature.
 Make changes and commit: git commit -m "Add your feature".
 Push to your fork: git push origin feature/your-feature.
