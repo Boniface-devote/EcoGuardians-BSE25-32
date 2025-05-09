@@ -32,7 +32,7 @@ Minimum Requirements**
 
 
 **Windows**
-- OS: Windows 10 or later- RAM: 4 GB- Storage: 100 MB free- GPU: DirectX 12 compatible- Mouse/keyboard or touchscreen
+- OS: Windows 10 or later- RAM: 4 GB- Storage: 1.5GB free- GPU: DirectX 12 compatible- Mouse/keyboard or touchscreen
 
 
 **Installation**
@@ -100,7 +100,7 @@ Please follow our Code of Conduct and review the Contributing Guidelines.
 GitHub Issues: Report bugs or request features at Issues. Include device details and steps to reproduce.
 Email: Contact [email to be announced within 30 days] for assistance.
 Common Issues:
-Installation Fails: Ensure 100 MB free storage and correct permissions.
+Installation Fails: Ensure 1.5GB free storage and correct permissions.
 Controls Unresponsive: Restart the app or verify touchscreen functionality.
 Save Corruption: Game restarts with a “Save file corrupted” message.
 
