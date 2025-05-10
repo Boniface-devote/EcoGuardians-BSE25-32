@@ -50,6 +50,8 @@ Download EcoGuardians_Setup.exe from Releases.
 Run the EXE and follow the installer prompts to install to C:\Program Files\EcoGuardians or a custom directory.
 Launch the game via the desktop shortcut or Start menu.
 
+You can download both the Android APK and Windows EXE files from this link: https://drive.google.com/drive/folders/1KeAUFDqemQMI7-PsU_tK4vQFAtARZHD_?usp=sharing
+
 **Usage**
 **Getting Started**
 
