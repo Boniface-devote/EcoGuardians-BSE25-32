@@ -5588,6 +5588,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameInputField: {fileID: 112279735}
   joinButton: {fileID: 1949202773}
+  mainMenuPanel: {fileID: 399351107}
+  usernamePanel: {fileID: 394878282}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
